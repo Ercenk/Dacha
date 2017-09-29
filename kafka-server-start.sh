@@ -1,0 +1,2 @@
+export JMX_PORT=${JMX_PORT:-9999}
+export KAFKA_HEAP_OPTS="-Xmx256M -Xms128M"
