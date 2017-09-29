@@ -8,5 +8,7 @@ It is also connected to a 433mHz RF gateway that receives temperature, humidity 
 
 Sensors are using HopeRF RFM69 radios, controlled by Arduino compatible microcontrollers. The sensors are BME280, which are highly accurate in reading temperature and humidity.
 
+![blockDiagram](./Docs/blockdiagram.png)
 
-
+Here is how the sensors look like:
+![sensors](./Docs/sensors.jpg)
