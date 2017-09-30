@@ -1,8 +1,8 @@
 # Dacha
 
-Home automation for our 
+Home automation for our remote home.
 
-The hub is a Raspberry Pi tethered to a GSM module, over serial connection. 
+The hub is a Raspberry Pi tethered to a GSM module, over serial connection.
 
 It is also connected to a 433mHz RF gateway that receives temperature, humidity readings along with battery condition from multiple sensors running on battery.
 
@@ -11,4 +11,5 @@ Sensors are using HopeRF RFM69 radios, controlled by Arduino compatible microcon
 ![blockDiagram](./Docs/blockdiagram.png)
 
 Here is how the sensors look like:
+
 ![sensors](./Docs/sensors.jpg)
