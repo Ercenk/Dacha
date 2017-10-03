@@ -21,3 +21,18 @@ And the R/F gateway connected to the Pi.
 Pi Zero with the camera:
 
 ![sensors](./Docs/piZeroWithCam.jpg)
+
+# What Happens on the Gateway?
+The sensors send data, only if there was a change detected during the N seconds (set in the code),or every N seconds.
+
+A Node-Red server runs on the gateway Pi, with the following flow.
+
+![sensors](./Docs/node-red-flow.png)
+
+Every time a packet is received on the gateway, it gets parsed, a timestamp is added (I maintain a synchronized time on the gateway), pushed to a Kafka topic (I will add a stream processing task later), also pushed to a local influxDb instance and MongoDB (why not? :))
+
+There is a Grafana server running on the box, that displays the values from the influxDB database.
+
+Here is how the dashboard looks like:
+
+![sensors](./Docs/dashboard.png)
