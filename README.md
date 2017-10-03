@@ -13,3 +13,11 @@ Sensors are using HopeRF RFM69 radios, controlled by Arduino compatible microcon
 Here is how the sensors look like:
 
 ![sensors](./Docs/sensors.jpg)
+
+And the R/F gateway connected to the Pi.
+
+![sensors](./Docs/gateway.jpg)
+
+Pi Zero with the camera:
+
+![sensors](./Docs/piZeroWithCam.jpg)
