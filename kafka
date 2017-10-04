@@ -1,0 +1,64 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          kafka
+# Required-Start:    $all
+# Required-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:
+# Short-Description: Starts zookeper and kafka...
+### END INIT INFO
+
+# Carry out specific functions when asked to by the system
+case "$1" in
+  start)
+    echo "Zookeeper"
+    sudo /usr/local/zookeeper/bin/zkServer.sh start
+    echo "Kafka"
+    sudo nohup /usr/local/kafka/bin/kafka-server-start.sh /usr/local/kafka/config/server.properties > /tmp/kafka.log 2>&1 &
+    ;;
+  stop)
+        echo "Shutting down Zookeeper"
+        pid=`ps ax | grep -i 'org.apache.zookeeper.server' | grep -v grep | awk '{print $1}'`
+        if [ -n "$pid" ]
+          then
+          kill -9 $pid
+        else
+          echo "Zookeeper was not Running"
+        fi
+        echo "Shutting down Kafka"
+        pid=`ps ax | grep -i 'kafka.Kafka' | grep -v grep | awk '{print $1}'`
+        if [ -n "$pid" ]
+          then
+          kill -9 $pid
+        else
+          echo "Kafka was not Running"
+        fi
+    ;;
+ restart)
+        $0 stop
+        sleep 2
+        $0 start
+        ;;
+  status)
+        pid=`ps ax | grep -i 'org.apache.zookeeper.server' | grep -v grep | awk '{print $1}'`
+        if [ -n "$pid" ]
+          then
+          echo "Zookeeper is Running as PID: $pid"
+        else
+          echo "Zookeeper is not Running"
+        fi
+        pid=`ps ax | grep -i 'kafka.Kafka' | grep -v grep | awk '{print $1}'`
+        if [ -n "$pid" ]
+          then
+          echo "Kafka is Running as PID: $pid"
+        else
+          echo "Kafka is not Running"
+        fi
+        ;;
+  *)
+    echo "Usage: /etc/init.d/blah {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0

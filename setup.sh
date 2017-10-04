@@ -1,3 +1,5 @@
+#! /bin/sh
+
 # warm up
 sudo apt-get update
 sudo apt-get install wget oracle-java8-jdk
@@ -25,6 +27,7 @@ sudo sed -i -e 's/KAFKA_JVM_PERFORMANCE_OPTS="-server -XX:+UseG1GC -XX:MaxGCPaus
 sudo mv /init.d.kafka /etc/init.d/kafka
 sudo chmod 755 /etc/init.d/kafka
 sudo update-rc.d kafka defaults
+sudo update-rc.d kafka enable
 
 # Install influxDB
 echo "deb https://repos.influxdata.com/debian stretch stable" | sudo tee /etc/apt/sources.list.d/influxdb.list
