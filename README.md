@@ -35,4 +35,4 @@ There is a Grafana server running on the box, that displays the values from the 
 
 Here is how the dashboard looks like:
 
-![sensors](./Docs/dashboard.png)
+![sensors](./Docs/dashboard.jpg)
