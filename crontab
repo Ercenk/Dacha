@@ -1,0 +1,1 @@
+@reboot /home/pi/copyMotion/copy.sh >> /home/pi/copyMotion/logs/copy.log  2>&1
