@@ -1,0 +1,5 @@
+{
+    "board": "Moteino:avr:Moteino",
+    "port": "/dev/cu.usbserial-A603G0GZ",
+    "sketch": "sensor.ino"
+}

@@ -111,10 +111,12 @@ byte ackCount=0;
 uint32_t packetCount = 0;
 typedef struct {
   int nodeId; 
-  float temperature; 
-  float heatIndex; 
-  float humidity;  
+  double temperature; 
+  double pressure; 
+  double humidity;   
+  unsigned int battery;
 } Payload;
+
 Payload payload;
 
 void loop() {
@@ -194,8 +196,6 @@ void loop() {
       Serial.print(payload.temperature);
       Serial.print(",HU=");
       Serial.print(payload.humidity);
-      Serial.print(",HI=");
-      Serial.print(payload.heatIndex);
     }
     
      Serial.print("   [RX_RSSI:");Serial.print(radio.RSSI);Serial.print("]");
