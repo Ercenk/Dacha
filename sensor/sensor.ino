@@ -39,11 +39,9 @@ void loop()
 {
   sendData();
 
-/*  for (byte i = 0; i < SLEEP_COUNT; i++) {
+  for (byte i = 0; i < SLEEP_COUNT; i++) {
     LowPower.powerDown(SLEEP_8S, ADC_OFF, BOD_OFF);
   }
-  */
-  DEBUGln("loop");
 }
 
 void setupBase()
@@ -74,15 +72,12 @@ void setupFlash()
 void setupRadio()
 {
   radio.initialize(FREQUENCY,NODEID,NETWORKID);
-  #ifdef IS_RFM69HW_HCW
-    radio.setHighPower(); //must include this only for RFM69HW/HCW!
-  #endif
+
+  radio.setHighPower(); //must include this only for RFM69HW/HCW!
 
   radio.encrypt(ENCRYPTKEY);
 
-  #ifdef ENABLE_ATC
-    radio.enableAutoPower(ATC_RSSI);
-  #endif
+  radio.enableAutoPower(ATC_RSSI);
 
   radio.sendWithRetry(GATEWAYID, "START", 6);
 }
@@ -94,27 +89,34 @@ void sendData()
 
   // BME temp, etc...
   sensor.setMode(MODE_FORCED); 
-  DEBUGln("here1");
   
   while(sensor.isMeasuring() == false) ; 
   while(sensor.isMeasuring() == true) ; 
-    DEBUGln("here2");
  
   payload.temperature = sensor.readTempF();
   payload.humidity = sensor.readFloatHumidity();
   payload.pressure = sensor.readFloatPressure() * 0.0002953; //read Pa and convert to inHg
-  Serial.println( payload.temperature );
 
-  if (radio.sendWithRetry(GATEWAYID, (const void*)(&payload), sizeof(payload)), 2)
+  if (radio.sendWithRetry(GATEWAYID, (const void*)(&payload), sizeof(payload)))
   {
-    DEBUGln("\n..OK");
-    #ifdef BLINK_EN
-      blink(LED,3);
-    #endif
-  }
-  else{
-      DEBUGln("not OK");
+    DEBUG( payload.temperature ); DEBUG(", ");
+    DEBUGln( NODEID );
+    blink(LED_PIN,300);
+    if (radio.receiveDone())
+    {
+      DEBUG("RSSI: "); DEBUGln(radio.readRSSI());
+      
+      if (radio.ACKRequested())
+      {
+        radio.sendACK();
+        DEBUGln("-> ACK sent");
+      }
     }
+  }
+  else
+  {
+    DEBUGln("not OK");
+  }
 
   sensor.setMode(MODE_SLEEP);
   delay(10);

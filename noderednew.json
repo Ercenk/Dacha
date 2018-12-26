@@ -1,0 +1,1 @@
+[{"id":"622076d0.847798","type":"influxdb out","z":"4f479a45.486dd4","influxdb":"dec35fb0.0d2f3","name":"","measurement":"tempandhum","precision":"","retentionPolicy":"","x":800,"y":400,"wires":[]},{"id":"dec35fb0.0d2f3","type":"influxdb","z":"","hostname":"127.0.0.1","port":"8086","protocol":"http","database":"sensordata","name":"","usetls":false,"tls":""}]

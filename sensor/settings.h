@@ -1,4 +1,4 @@
-#define NODEID            41    
+#define NODEID            40
 #define NETWORKID         100  
 #define GATEWAYID         1
 
@@ -9,7 +9,7 @@
 #define SENDEVERYXLOOPS   8 
 
 #define ENABLE_ATC    
-#define ATC_RSSI -75
+#define ATC_RSSI -80
 
 #define LED_PIN             9
 #define BATTERY_PIN         A7
@@ -28,6 +28,6 @@
   #define DEBUGln(input);
 #endif
 
-#define SLEEP_COUNT         32
+#define SLEEP_COUNT   1     // 32
 
 #define BATTERY_RATIO       4.73
