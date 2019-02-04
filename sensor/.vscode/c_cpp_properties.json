@@ -1,19 +1,65 @@
 {
+    "!!! WARNING !!!": "PLEASE DO NOT MODIFY THIS FILE! USE https://docs.platformio.org/page/projectconf/section_env_build.html#build-flags",
     "configurations": [
         {
-            "name": "Mac",
+            "name": "Win32",
             "includePath": [
-                "/Users/ercenk/Library/Arduino15/packages/Moteino/hardware/avr/1.4.0/**"
+                "C:/Users/ercenk/.platformio/packages/framework-arduinoavr/cores/arduino",
+                "C:/Users/ercenk/.platformio/packages/framework-arduinoavr/variants/Moteino",
+                "C:/Users/ercenk/.platformio/lib/ArduinoJson_ID64/src",
+                "C:/Users/ercenk/.platformio/lib/FastLED_ID126",
+                "C:/Users/ercenk/.platformio/lib/LEDEffect_ID2857/src",
+                "C:/Users/ercenk/.platformio/lib/Low-Power_ID38",
+                "C:/Users/ercenk/.platformio/lib/RFM69_ID92",
+                "C:/Users/ercenk/.platformio/lib/SPIFlash_ID125",
+                "C:/Users/ercenk/.platformio/lib/SparkFun BME280_ID684/src",
+                "C:/Users/ercenk/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/EEPROM/src",
+                "C:/Users/ercenk/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/HID/src",
+                "C:/Users/ercenk/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SPI/src",
+                "C:/Users/ercenk/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SoftwareSerial/src",
+                "C:/Users/ercenk/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/Wire/src",
+                "C:/Users/ercenk/.platformio/packages/tool-unity",
+                "e:/Personal/Dacha/sensor/include",
+                "e:/Personal/Dacha/sensor/src",
+                ""
             ],
-            "forcedInclude": [],
-            "macFrameworkPath": [
-                "/System/Library/Frameworks",
-                "/Library/Frameworks"
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": "${workspaceRoot}/.vscode/.browse.c_cpp.db",
+                "path": [
+                    "C:/Users/ercenk/.platformio/packages/framework-arduinoavr/cores/arduino",
+                    "C:/Users/ercenk/.platformio/packages/framework-arduinoavr/variants/Moteino",
+                    "C:/Users/ercenk/.platformio/lib/ArduinoJson_ID64/src",
+                    "C:/Users/ercenk/.platformio/lib/FastLED_ID126",
+                    "C:/Users/ercenk/.platformio/lib/LEDEffect_ID2857/src",
+                    "C:/Users/ercenk/.platformio/lib/Low-Power_ID38",
+                    "C:/Users/ercenk/.platformio/lib/RFM69_ID92",
+                    "C:/Users/ercenk/.platformio/lib/SPIFlash_ID125",
+                    "C:/Users/ercenk/.platformio/lib/SparkFun BME280_ID684/src",
+                    "C:/Users/ercenk/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/EEPROM/src",
+                    "C:/Users/ercenk/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/HID/src",
+                    "C:/Users/ercenk/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SPI/src",
+                    "C:/Users/ercenk/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SoftwareSerial/src",
+                    "C:/Users/ercenk/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/Wire/src",
+                    "C:/Users/ercenk/.platformio/packages/tool-unity",
+                    "e:/Personal/Dacha/sensor/include",
+                    "e:/Personal/Dacha/sensor/src",
+                    ""
+                ]
+            },
+            "defines": [
+                "PLATFORMIO=30604",
+                "ARDUINO_AVR_MOTEINO",
+                "F_CPU=16000000L",
+                "ARDUINO_ARCH_AVR",
+                "ARDUINO=10805",
+                "__AVR_ATmega328P__",
+                ""
             ],
             "intelliSenseMode": "clang-x64",
-            "compilerPath": "/usr/bin/clang",
             "cStandard": "c11",
-            "cppStandard": "c++17"
+            "cppStandard": "c++11",
+            "compilerPath": "C:/Users/ercenk/.platformio/packages/toolchain-atmelavr/bin/avr-gcc.exe -mmcu=atmega328p"
         }
     ],
     "version": 4
