@@ -5,10 +5,10 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 
-const char* ssid     = "skisandpoles";
-const char* password = "orkan3014";
+const char* ssid     = "*******";
+const char* password = "*******";
  
-const char* host = "homeberry";
+const char* host = "*******";
 
 // OneWire
 #include <OneWire.h> 
@@ -67,7 +67,7 @@ void setup() {
 int value = 0;
  
 void loop() {
-  delay(5000);
+  delay(10000);
   ++value;
   uint8_t sensorCount = sensors.getDeviceCount();
   sensors.requestTemperatures();
@@ -116,7 +116,4 @@ void loop() {
   String payload = httpClient.getString(); 
   Serial.println(payload); //Print request response payload 
   httpClient.end();
-  delay(500);
-
-
 }

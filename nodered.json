@@ -1,13 +1,333 @@
-[{ "id": "fdc04975.177cb8", "type": "serial in", "z": "4f479a45.486dd4", "name": "Gateway", "serial": "703ac738.6e8f28", "x": 120, "y": 160, "wires": [
-        ["a08349e4.86d4b8", "d89e759c.1dfb58", "ba26b604.7533f8"]
-    ] }, { "id": "a08349e4.86d4b8", "type": "debug", "z": "4f479a45.486dd4", "name": "", "active": true, "console": "false", "complete": "false", "x": 380, "y": 94, "wires": [] }, { "id": "d89e759c.1dfb58", "type": "switch", "z": "4f479a45.486dd4", "name": "SensorRead", "property": "payload", "propertyType": "msg", "rules": [{ "t": "cont", "v": "Data", "vt": "str" }], "checkall": "true", "outputs": 1, "x": 147, "y": 296, "wires": [
-        ["8d28589c.84a1c8", "828749d7.317758"]
-    ] }, { "id": "8d28589c.84a1c8", "type": "debug", "z": "4f479a45.486dd4", "name": "", "active": false, "console": "true", "complete": "true", "x": 315.5, "y": 376, "wires": [] }, { "id": "ba26b604.7533f8", "type": "json", "z": "4f479a45.486dd4", "name": "", "x": 306.5, "y": 193, "wires": [
-        ["28a055e3.3dc5aa"]
-    ] }, { "id": "28a055e3.3dc5aa", "type": "debug", "z": "4f479a45.486dd4", "name": "", "active": false, "console": "false", "complete": "false", "x": 622.5, "y": 132, "wires": [] }, { "id": "828749d7.317758", "type": "json", "z": "4f479a45.486dd4", "name": "", "x": 105.5, "y": 470, "wires": [
-        ["58f95e03.d8729"]
-    ] }, { "id": "58f95e03.d8729", "type": "Input Split", "z": "4f479a45.486dd4", "name": "Split data", "inputProps": ["payload.Data"], "outputs": 1, "x": 287, "y": 456, "wires": [
-        ["628c64ee.f5002c"]
-    ] }, { "id": "42cb8921.c15e68", "type": "debug", "z": "4f479a45.486dd4", "name": "", "active": true, "console": "false", "complete": "payload", "x": 588, "y": 319, "wires": [] }, { "id": "628c64ee.f5002c", "type": "function", "z": "4f479a45.486dd4", "name": "Add timestamp", "func": "msg.payload.timeStamp = new Date().getTime();\nmsg.payload.formattedTimeStamp = new Date().toLocaleString();\nreturn msg;", "outputs": 1, "noerr": 0, "x": 460, "y": 420, "wires": [
-        ["42cb8921.c15e68", "84a15ace.508458", "c4b9cf17.3918", "622076d0.847798"]
-    ] }, { "id": "84a15ace.508458", "type": "mongodb out", "z": "4f479a45.486dd4", "mongodb": "1cffdbf7.b53414", "name": "Temp and humidity", "collection": "tempandhumidity", "payonly": true, "upsert": false, "multi": false, "operation": "store", "x": 530, "y": 520, "wires": [] }, { "id": "c4b9cf17.3918", "type": "kafka", "z": "4f479a45.486dd4", "zkquorum": "127.0.0.1:2181", "topics": "temp-and-hum-sensor", "debug": "", "x": 642.5, "y": 414, "wires": [] }, { "id": "622076d0.847798", "type": "influxdb out", "z": "4f479a45.486dd4", "influxdb": "dec35fb0.0d2f3", "name": "", "measurement": "tempandhum", "precision": "", "retentionPolicy": "", "x": 521.5, "y": 691, "wires": [] }, { "id": "703ac738.6e8f28", "type": "serial-port", "z": "", "serialport": "/dev/ttyUSB0", "serialbaud": "115200", "databits": "8", "parity": "none", "stopbits": "1", "newline": "\\n", "bin": "false", "out": "char", "addchar": false }, { "id": "1cffdbf7.b53414", "type": "mongodb", "z": "4f479a45.486dd4", "hostname": "127.0.0.1", "port": "27017", "db": "sensors", "name": "local sensors" }, { "id": "dec35fb0.0d2f3", "type": "influxdb", "z": "", "hostname": "127.0.0.1", "port": "8086", "protocol": "http", "database": "sensordata", "name": "", "usetls": false, "tls": "" }]
+[
+    {
+        "id": "4e45b03a.417a",
+        "type": "tab",
+        "label": "EnvironmentFlow",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "131364e9.8dea7b",
+        "type": "serial in",
+        "z": "4e45b03a.417a",
+        "name": "Gateway",
+        "serial": "c693ec8b.94f9c",
+        "x": 100,
+        "y": 80,
+        "wires": [
+            [
+                "b0b53238.acead"
+            ]
+        ]
+    },
+    {
+        "id": "b0b53238.acead",
+        "type": "switch",
+        "z": "4e45b03a.417a",
+        "name": "SensorRead",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "NI",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 270,
+        "y": 80,
+        "wires": [
+            [
+                "c5172872.2c9148",
+                "f13d6c2b.833f6"
+            ]
+        ]
+    },
+    {
+        "id": "c5172872.2c9148",
+        "type": "debug",
+        "z": "4e45b03a.417a",
+        "name": "",
+        "active": false,
+        "console": "true",
+        "complete": "true",
+        "x": 450,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "f13d6c2b.833f6",
+        "type": "json",
+        "z": "4e45b03a.417a",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 190,
+        "y": 180,
+        "wires": [
+            [
+                "9aa20a97.e99458"
+            ]
+        ]
+    },
+    {
+        "id": "cf3cc1e3.62cd8",
+        "type": "debug",
+        "z": "4e45b03a.417a",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "payload",
+        "x": 750,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "10508818.f342a8",
+        "type": "function",
+        "z": "4e45b03a.417a",
+        "name": "Prepare for InfluxDB",
+        "func": "var node = {};\nnode.id = msg.payload.NI;\n\ndelete msg.payload.NI;\n\nvar payload = [[msg.payload, node]];\n\nvar newMsg = {};\nnewMsg.payload = payload;\n\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 540,
+        "y": 240,
+        "wires": [
+            [
+                "cf3cc1e3.62cd8",
+                "541d8b63.c5ad84",
+                "74e5fb6e.64ac54"
+            ]
+        ]
+    },
+    {
+        "id": "541d8b63.c5ad84",
+        "type": "influxdb out",
+        "z": "4e45b03a.417a",
+        "influxdb": "edb17697.da2cc8",
+        "name": "InfluxDb",
+        "measurement": "sensors",
+        "precision": "",
+        "retentionPolicy": "",
+        "x": 760,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "cb25b433.8a1388",
+        "type": "function",
+        "z": "4e45b03a.417a",
+        "name": "Prepare IoT hub payload",
+        "func": "var devices = [\n    {\n        \"deviceId\": \"ab77a13f-df1e-4092-b0d7-5fd88fe34252\",\n        \"key\": \"nPMIl3crzbGquFDRNGFReZ5MjBUjzHxOQI2eDzUkrro=\"\n    },\n    {\n        \"deviceId\": \"4359ba87-2293-4fce-97d7-84405061e65e\",\n        \"key\": \"m5pMzoexu16ACTjHnaoTwGSMAF8333DA1lF1BZj9IEk=\"\n    },\n    {\n        \"deviceId\": \"8efefba1-04c6-4482-9f5d-0bfac9a0c6ad\",\n        \"key\": \"x50G7nxIBhcptj+j7FftTyOT25UpGt56kaCy3o0zXZI=\"\n    }];\n    \n  \nvar scope = \"0ne000434C5\";\n\nvar outMsg = {};\n\nif (msg.payload.NI != 40 && msg.payload.NI != 41 && msg.payload.NI != 42) {\n    outMsg.payload = null;\n    return outMsg;\n} \n \nvar device = devices[msg.payload.NI - 40];\n/*\nvar iotMessage = \n{\n      \"deviceId\": device.deviceId,\n      \"key\": device.key,\n      \"protocol\": \"mqtt\",\n      \"data\": \"{battery:\" + msg.payload.battery + \n        \", rssi:\" + msg.payload.rssi + \n        \", temperature:\" + msg.payload.temperature +\n        \", pressure:\" + msg.payload.pressure +\n        \", humidity:\" + msg.payload.humidity +\n    \"}\"\n};\n*/\n\nvar iotMessage = \n{\n      \"deviceId\": device.deviceId,\n      \"key\": device.key,\n      \"protocol\": \"mqtt\",\n      \"data\": {\n          battery: msg.payload.battery,\n          rssi: msg.payload.rssi,\n          temperature: msg.payload.temperature,\n          pressure: msg.payload.pressure,\n          humidity:msg.payload.humidity\n      }\n};\n\noutMsg.payload = iotMessage;\nreturn outMsg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 450,
+        "y": 640,
+        "wires": [
+            [
+                "4861e2ae.6bb93c",
+                "dd278cf4.13e1"
+            ]
+        ]
+    },
+    {
+        "id": "4861e2ae.6bb93c",
+        "type": "debug",
+        "z": "4e45b03a.417a",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 750,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "66b97db6.6a6094",
+        "type": "function",
+        "z": "4e45b03a.417a",
+        "name": "Change property names",
+        "func": "var dataPoint = {};\n\ndataPoint.timestamp = new Date().getTime();\ndataPoint.battery = msg.payload.BAT;\ndataPoint.rssi = msg.payload.RSSI;\ndataPoint.temperature = msg.payload.TE;\ndataPoint.pressure = msg.payload.PR;\ndataPoint.humidity = msg.payload.HU;\ndataPoint.NI = msg.payload.NI;\n\nvar newMsg = {};\nnewMsg.payload = dataPoint;\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 390,
+        "y": 380,
+        "wires": [
+            [
+                "10508818.f342a8",
+                "cb25b433.8a1388",
+                "6ec04c22.13b074"
+            ]
+        ]
+    },
+    {
+        "id": "6ec04c22.13b074",
+        "type": "debug",
+        "z": "4e45b03a.417a",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 630,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "dd278cf4.13e1",
+        "type": "azureiothub",
+        "z": "4e45b03a.417a",
+        "name": "Azure IoT Hub",
+        "protocol": "mqtt",
+        "x": 700,
+        "y": 660,
+        "wires": [
+            [
+                "8cf59836.93e978"
+            ]
+        ]
+    },
+    {
+        "id": "8cf59836.93e978",
+        "type": "debug",
+        "z": "4e45b03a.417a",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 840,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "74e5fb6e.64ac54",
+        "type": "influxdb out",
+        "z": "4e45b03a.417a",
+        "influxdb": "82ad530.fa4c9b",
+        "name": "",
+        "measurement": "sensors",
+        "precision": "",
+        "retentionPolicy": "",
+        "x": 770,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "9aa20a97.e99458",
+        "type": "function",
+        "z": "4e45b03a.417a",
+        "name": "Filter node IDs",
+        "func": "if (msg.payload.NI === 40 ||\n    msg.payload.NI === 41 ||\n    msg.payload.NI === 42 )\n{\n    return [msg, null];}\nelse\n{\n    return [null, msg];\n}",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 360,
+        "y": 180,
+        "wires": [
+            [
+                "f1c74276.a3453"
+            ],
+            [
+                "8bffedb.d70071"
+            ]
+        ]
+    },
+    {
+        "id": "f1c74276.a3453",
+        "type": "switch",
+        "z": "4e45b03a.417a",
+        "name": "Filter out null",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nempty"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 210,
+        "y": 280,
+        "wires": [
+            [
+                "66b97db6.6a6094",
+                "50944506.a9daec"
+            ]
+        ]
+    },
+    {
+        "id": "8bffedb.d70071",
+        "type": "debug",
+        "z": "4e45b03a.417a",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 550,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "50944506.a9daec",
+        "type": "debug",
+        "z": "4e45b03a.417a",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 190,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "c693ec8b.94f9c",
+        "type": "serial-port",
+        "z": "",
+        "serialport": "/dev/ttyUSB0",
+        "serialbaud": "115200",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": false
+    },
+    {
+        "id": "edb17697.da2cc8",
+        "type": "influxdb",
+        "z": "",
+        "hostname": "127.0.0.1",
+        "port": "8086",
+        "protocol": "http",
+        "database": "environment",
+        "name": "",
+        "usetls": false,
+        "tls": ""
+    },
+    {
+        "id": "82ad530.fa4c9b",
+        "type": "influxdb",
+        "z": "4e45b03a.417a",
+        "hostname": "52.247.200.31",
+        "port": "8086",
+        "protocol": "http",
+        "database": "environment",
+        "name": "RemoteInfluxDB",
+        "usetls": false,
+        "tls": ""
+    }
+]
