@@ -1,5 +1,9 @@
 #include <Arduino.h>
 
+// https://learn.adafruit.com/i2c-addresses?view=all
+
+
+
 /*
  *  Simple HTTP get webclient test
  */
