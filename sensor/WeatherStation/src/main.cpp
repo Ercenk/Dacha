@@ -1,91 +1,5 @@
 #include <Arduino.h>
 
-// https://learn.adafruit.com/i2c-addresses?view=all
-
-
-
-/*
- *  Simple HTTP get webclient test
- */
-
-/*
-#include <ESP8266WiFi.h>
-
-const char* ssid     = "";
-const char* password = "";
-
-const char* host = "wifitest.adafruit.com";
-
-void setup() {
-  Serial.begin(115200);
-  delay(100);
-
-  // We start by connecting to a WiFi network
-
-  Serial.println();
-  Serial.println();
-  Serial.print("Connecting to ");
-  Serial.println(ssid);
-  
-  WiFi.begin(ssid, password);
-  
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-
-  Serial.println("");
-  Serial.println("WiFi connected");  
-  Serial.println("IP address: ");
-  Serial.println(WiFi.localIP());
-  Serial.print("Netmask: ");
-  Serial.println(WiFi.subnetMask());
-  Serial.print("Gateway: ");
-  Serial.println(WiFi.gatewayIP());
-}
-
-int value = 0;
-
-void loop() {
-  delay(5000);
-  ++value;
-
-  Serial.print("connecting to ");
-  Serial.println(host);
-  
-  // Use WiFiClient class to create TCP connections
-  WiFiClient client;
-  const int httpPort = 80;
-  if (!client.connect(host, httpPort)) {
-    Serial.println("connection failed");
-    return;
-  }
-  
-  // We now create a URI for the request
-  String url = "/testwifi/index.html";
-  Serial.print("Requesting URL: ");
-  Serial.println(url);
-  
-  // This will send the request to the server
-  client.print(String("GET ") + url + " HTTP/1.1\r\n" +
-               "Host: " + host + "\r\n" + 
-               "Connection: close\r\n\r\n");
-  delay(500);
-  
-  // Read all the lines of the reply from server and print them to Serial
-  while(client.available()){
-    String line = client.readStringUntil('\r');
-    Serial.print(line);
-  }
-  
-  Serial.println();
-  Serial.println("closing connection");
-}*/
-
-/* TSL2591 Digital Light Sensor */
-/* Dynamic Range: 600M:1 */
-/* Maximum Lux: 88K */
-
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
 #include "Adafruit_TSL2591.h"
@@ -202,7 +116,7 @@ void setup(void)
     while (1);
   }
 
-  if (!bme.begin()) {
+  if (!bme.begin(BME280_ADDRESS_ALTERNATE)) {
     Serial.println(F("Could not find a valid BME280 sensor, check wiring!"));
     while (1) delay(10);
   }
@@ -292,8 +206,8 @@ void bmeRead(void)
   bme_humidity->getEvent(&humidity_event);
   
   Serial.print(F("Temperature = "));
-  Serial.print(temp_event.temperature);
-  Serial.println(" *C");
+  Serial.print((temp_event.temperature - 2) * 9/5 + 32);
+  Serial.println(" *F");
 
   Serial.print(F("Humidity = "));
   Serial.print(humidity_event.relative_humidity);
@@ -316,9 +230,111 @@ void bmeRead(void)
 void loop(void) 
 { 
   //simpleRead(); 
-  //advancedRead();
-   unifiedSensorAPIRead();
+  advancedRead();
+   //unifiedSensorAPIRead();
   
    bmeRead();
   delay(500);
 }
+
+
+// ////////////////
+
+// #include <Arduino.h>
+// #include <SPI.h>
+
+// // Huzzah
+// #include <ESP8266WiFi.h>
+// #include <ESP8266HTTPClient.h>
+
+// const char* ssid     = "*******";
+// const char* password = "*******";
+ 
+// const char* host = "*******";
+ 
+// void setup() {
+//   Serial.begin(115200);
+//   delay(100);
+ 
+//  // WiFi
+//  // *********************
+//   // We start by connecting to a WiFi network
+ 
+//   Serial.println();
+//   Serial.println();
+//   Serial.print("Connecting to ");
+//   Serial.println(ssid);
+  
+//   WiFi.begin(ssid, password);
+  
+//   while (WiFi.status() != WL_CONNECTED) {
+//     delay(500);
+//     Serial.print(".");
+//   }
+ 
+//   Serial.println("");
+//   Serial.println("WiFi connected");  
+//   Serial.println("IP address: ");
+//   Serial.println(WiFi.localIP());
+//   Serial.print("Netmask: ");
+//   Serial.println(WiFi.subnetMask());
+//   Serial.print("Gateway: ");
+//   Serial.println(WiFi.gatewayIP());
+
+//   // OneWire
+//    sensors.begin(); 
+// }
+ 
+// int value = 0;
+ 
+// void loop() {
+//   delay(10000);
+//   ++value;
+//   uint8_t sensorCount = sensors.getDeviceCount();
+//   sensors.requestTemperatures();
+//   float temp;
+//   String sensorValues = "[";
+//   for (int i = 0; i < sensorCount ; i++){
+//       temp = sensors.getTempFByIndex(i);
+//       Serial.print(i); Serial.print(" temperature is: "); 
+//       Serial.print(temp);
+//       DeviceAddress address;
+//       sensors.getAddress(address, i);
+
+//       sensorValues += "{\"sensor\": \"" + convertAddress(address) + "\", \"index\": " + String(i) + ", \"value\": " + String(temp) + "}";
+//       if (i < sensorCount - 1) sensorValues += ",";
+//   }
+
+//   sensorValues += "]";
+//   Serial.println("Payload is:");
+//   Serial.println(sensorValues);
+
+//   Serial.print("connecting to ");
+//   Serial.println(host);
+  
+//   // Use WiFiClient class to create TCP connections
+//   WiFiClient client;
+//   const int httpPort = 1880;
+//   if (!client.connect(host, httpPort)) {
+//     Serial.println("connection failed");
+//     return;
+//   }
+  
+//   // We now create a URI for the request
+//   String url = "/watertemp";
+//   Serial.print("Requesting URL: ");
+//   Serial.println(url);
+  
+//   HTTPClient httpClient;
+
+//   String postUrl = "http://" + String(host) + ":" +  String(httpPort) + url;
+  
+//   httpClient.begin(postUrl);
+//   httpClient.addHeader("Content-Type", "application/json"); 
+//   auto httpCode = httpClient.POST(sensorValues);
+
+//   Serial.println(httpCode);
+//   String payload = httpClient.getString(); 
+//   Serial.println(payload); //Print request response payload 
+//   httpClient.end();
+// }
