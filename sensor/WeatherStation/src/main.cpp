@@ -13,8 +13,6 @@
 #include <ESP8266WebServer.h> //Local WebServer used to serve the configuration portal
 #include <WiFiManager.h>      //https://github.com/tzapu/WiFiManager WiFi Configuration Magic
 
-char hostParam[40];
-
 #define GPIO0 0
 
 Adafruit_TSL2591 tsl = Adafruit_TSL2591(2591); // pass in a number for the sensor identifier (for your use later)
@@ -23,9 +21,53 @@ Adafruit_Sensor *bme_temp = bme.getTemperatureSensor();
 Adafruit_Sensor *bme_pressure = bme.getPressureSensor();
 Adafruit_Sensor *bme_humidity = bme.getHumiditySensor();
 
+WiFiManager wifiManager;
+String host;
+char hostParam[40];
+
+WiFiManagerParameter host_parameter("server", "host", hostParam, 40);
+
+
 // READ
 // https://www.instructables.com/id/ESP8266-Pro-Tips/
 // https://www.bakke.online/index.php/2017/06/02/self-updating-ota-firmware-for-esp8266/
+
+void setupFileSystem() {
+  SPIFFS.format();
+
+    if (SPIFFS.begin()) {
+    Serial.println("mounted file system");
+    if (SPIFFS.exists("/config.json")) {
+      //file exists, reading and loading
+      Serial.println("reading config file");
+      File configFile = SPIFFS.open("/config.json", "r");
+      if (configFile) {
+        Serial.println("opened config file");
+        size_t size = configFile.size();
+        // Allocate a buffer to store contents of the file.
+        std::unique_ptr<char[]> buf(new char[size]);
+
+        configFile.readBytes(buf.get(), size);
+        DynamicJsonDocument  jsonBuffer(512);
+        deserializeJson(jsonBuffer, configFile);
+        
+        //JsonObject& json = jsonBuffer.parseObject(buf.get());
+        json.printTo(Serial);
+        if (json.success()) {
+          Serial.println("\nparsed json");
+
+          strcpy(host, json["host"]);
+
+        } else {
+          Serial.println("failed to load json config");
+        }
+        configFile.close();
+      }
+    }
+  } else {
+    Serial.println("failed to mount FS");
+  }
+}
 
 void setup(void)
 {
@@ -69,13 +111,14 @@ void setup(void)
 
 void loop(void)
 {
-  String host;
 
-  if (digitalRead(GPIO0) == LOW)
+   host = host_parameter.getValue();
+           Serial.print("Host is: ");
+           Serial.println(host);
+  if (digitalRead(GPIO0) == LOW || host == "")
   {
-    WiFiManager wifiManager;
     wifiManager.resetSettings();
-    WiFiManagerParameter host_parameter("server", "host", hostParam, 40);
+
     wifiManager.addParameter(&host_parameter);
 
     wifiManager.startConfigPortal();
